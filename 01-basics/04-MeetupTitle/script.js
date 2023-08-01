@@ -17,18 +17,25 @@ function fetchMeetupById(meetupId) {
 createApp({
   data() {
     return {
-      meetupTitle: null,
       meetupId: null,
+      meetupTitle: '',
     }
   },
 
-  methods: {
-    handleCheckboxChange(meetupId) {
-      fetchMeetupById(meetupId);
+  watch: {
+    meetupId: {
+      immediate: true,
+      handler(newValue) {
+        this.fetchMeetupData(newValue);
+      },
     },
   },
 
-  watch: {
-
+  methods: {
+    fetchMeetupData(meetupId) {
+      fetchMeetupById(meetupId).then((data) => {
+        this.meetupTitle = data.title
+      })
+    }
   }
 }).mount("#app");
