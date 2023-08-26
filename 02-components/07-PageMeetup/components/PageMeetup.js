@@ -34,8 +34,10 @@ export default defineComponent({
         this.isLoading = true;
         this.meetup = await fetchMeetupById(this.meetupId);
         this.isError = false;
+        this.error = '';
       } catch (error) {
         this.isError = true;
+        this.error = error.message;
       } finally {
         this.isLoading = false;
       }
@@ -59,7 +61,7 @@ export default defineComponent({
       </UiContainer>
 
       <UiContainer v-else-if="isError">
-        <UiAlert>Test Error</UiAlert>
+        <UiAlert>{{ error }}</UiAlert>
       </UiContainer>
     </div>`,
 });
